@@ -1,0 +1,15 @@
+package wpzad1;
+
+
+public class Wpzad1 {
+
+
+    public static void main(String[] args) {
+       Lista testowalista = Lista.getInstance();
+       testowalista.addElement("Jan");
+       System.out.println(testowalista.getElement());
+       Lista testowalista1 = Lista.getInstance();
+       testowalista1.delElement("Kasia");
+    }
+    
+}
