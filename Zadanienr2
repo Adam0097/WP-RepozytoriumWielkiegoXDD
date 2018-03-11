@@ -1,0 +1,88 @@
+package wpzadania;
+
+
+abstract class Rower {
+    
+	protected String rower = "Samochod podstawowy";
+	
+	public String about(){
+		return rower;
+	}
+	
+	public abstract double cena();
+}
+
+
+abstract class Dekorator extends Rower {
+	public abstract String about();
+}
+
+
+class Kross extends Rower{
+	
+	public Kross(){
+		rower = "Kross";
+	}
+	
+	public double cena(){
+		return 500;
+	}
+}
+class Kask extends Dekorator {
+	Rower rower;
+	
+	public Kask(Rower rower){
+		this.rower = rower;
+	}
+	
+	public String about(){
+		return rower.about() + " + kask";
+	}
+	
+	public double cena(){
+		if(rower instanceof Kross){
+			return rower.cena()+20;
+		}
+		return 0.;
+	}
+}
+	
+class Pompka extends Dekorator {
+	Rower rower;
+	
+	public Pompka(Rower rower){
+		this.rower = rower;
+	}
+	
+	public String about(){
+		return rower.about() + " + pompka";
+	}
+	
+	
+	public double cena(){
+			return rower.cena()+10;
+	}
+}
+
+public class Main {
+	public static void main(String[]args){
+            
+            System.out.println("Pelne wyposazenie");
+            Rower s3 = new Kask(new Pompka(new Kross()));
+            System.out.println(s3.about() + " " + s3.cena());
+		
+
+		Rower s1 = new Kross();
+		System.out.println("Bez Kasku");
+		System.out.println(s1.about() + " " + s1.cena());
+		s1 = new Kask(s1);
+		System.out.println("Z Kaskiem");
+		System.out.println(s1.about() + " " + s1.cena());
+		s1 = new Pompka(s1);
+		System.out.println("Z Pompką");
+		System.out.println(s1.about() + " " + s1.cena());
+
+	}
+	
+}
+ 
