@@ -17,7 +17,6 @@ public:
     void logout();
     int getLogCount() const;
     int getLogFailCount() const;
-   
 }; 
 
 class CUsers
