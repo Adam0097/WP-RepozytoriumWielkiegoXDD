@@ -1,12 +1,12 @@
 #include <cstdio>
 #include <string>
 #include <set>
-
+username std;
 class CUser
 {
 private:
-    std::string m_sLogin;
-    std::string m_sPassword;
+    string m_sLogin;
+    string m_sPassword;
     int m_iLogCount;
     int m_iLogFailCount;
 public:
@@ -18,18 +18,18 @@ public:
     int getLogCount() const;
     int getLogFailCount() const;
    
-}; //class CUser
+}; 
 
 class CUsers
 {
 private:
-    typedef std::set < CUser > UsersT;
+    typedef set < CUser > UsersT;
     UsersT m_users;
 public:
     CUser * create( const char * sLogin, const char * sPassword );
     CUser * find( const char * sLogin ) const;
    
-}; //class CUsers
+};
 
 class CUser_Facade
 {
@@ -45,15 +45,14 @@ public:
     void logout();
     int getLogCount() const;
     int getLogFailCount() const;
-}; //class CUser_Facade
-
+}; 
 void printDetails( const CUser_Facade & facade )
 {
     if( !facade.isLogged() )
     {
         printf( "User is not logged.\n" );
         return;
-    } //if
+    } 
    
     printf( "Login = \"%s\"; Success login = %d; Failed login = %d;\n", facade.getName(), facade.getLogCount(), facade.getLogFailCount() );
 }
@@ -118,7 +117,7 @@ int CUser::getLogFailCount() const
 
 CUser * CUsers::create( const char * sLogin, const char * sPassword )
 {
-    std::pair < UsersT::iterator, bool > result = m_users.insert( CUser( sLogin, sPassword ) );
+    pair < UsersT::iterator, bool > result = m_users.insert( CUser( sLogin, sPassword ) );
     if( result.second == false )
          return NULL;
    
