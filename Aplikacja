@@ -1,0 +1,126 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
+namespace WpfApp4
+{
+    public partial class MainWindow : Window
+    {
+        #region Zmienne
+        MySqlConnection polaczenie = new MySqlConnection("server = localhost; user=root; database=fabryka");
+        MySqlCommand komenda;
+        MySqlDataReader czytnik;
+        string zapytanie = " ";
+        List<Postac> listaPostaci = new List<Postac>();
+        Postac wybranaPostac = null;
+        #endregion Zmienne
+
+        #region Konstruktory
+
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        #endregion Konstruktory
+
+        #region Metody
+        #region Ogólne
+        private void Button_Click(object sender, RoutedEventArgs e)//pobierz
+        {
+            InicjalizacjaDanych();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)//dodaj
+        {
+
+           
+
+        }
+        private void Button_Click_3(object sender, RoutedEventArgs e)//wczysc
+        {
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)//zamknij
+        {
+            this.Close();
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+
+        private void ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        void InicjalizacjaDanych()
+        {
+            try
+            {
+                if (polaczenie.State == System.Data.ConnectionState.Closed)
+                    polaczenie.Open();
+
+                zapytanie = "select * from postac";
+                komenda = new MySqlCommand(zapytanie, polaczenie);
+                czytnik = komenda.ExecuteReader();
+
+                listaPostaci.Clear();
+                postac.Items.Clear();
+                int licznik = 1;
+                if (czytnik.HasRows)
+                {
+                    while (czytnik.Read())
+                    {
+                        listaPostaci.Add(new Postac(czytnik.GetInt32("Id"), czytnik["Imie"].ToString()));
+                        postac.Items.Add(string.Format("{0}. {1}", licznik++, czytnik["Imie"].ToString()));
+                    }
+                    czytnik.Close();
+                }
+
+                
+
+            }
+            catch(Exception ex)
+            {
+                string byk = string.Format("",ex.Message );
+                MessageBox.Show(byk, "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+            finally
+            {
+                polaczenie.Close();
+                if(czytnik != null)
+                {
+                    czytnik.Dispose();
+                    czytnik = null;
+                }
+            }
+        }
+        void WyczyscListe()
+        {
+
+        }
+        #endregion Metody
+
+        #endregion Ogólne
+
+      
+    }
+}
